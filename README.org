@@ -1,0 +1,18 @@
+* Gym Grid World
+
+This project was separated from @qqiang00 project [[https://github.com/qqiang00/reinforce][reinforce]]. Separation is to facilitate the direct use of this environment in Gym. Of course, I also did a little bit of api adaptation. Thanks again to @qqiang00.
+
+* Usage
+
+#+BEGIN_SRC
+pip install -e grid-world
+#+END_SRC
+
+Then in your python project:
+
+#+BEGIN_SRC python
+import gym
+import grid_world
+
+env = gym.make('movan-world-v0')
+#+END_SRC
