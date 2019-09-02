@@ -35,3 +35,13 @@ register(
     id='movan-world-v0',
     entry_point='grid_world.envs:MovanWorld',
 )
+
+register(
+    id='maze8x8-v0',
+    entry_point='grid_world.envs:Maze8x8',
+)
+
+register(
+    id='multi-agent-8x8-v0',
+    entry_point='grid_world.envs:MultiAgentMaze8x8',
+)

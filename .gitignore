@@ -1,4 +1,6 @@
 .#*
 __pycache__/*
+grid_world/__pycache__/*
+grid_world/envs/__pycache__/*
 *.egg-info
 env/

@@ -1,1 +1,2 @@
-from grid_world.envs.grid_world_env import *
+from grid_world.envs.multi_agent_env import *
+from grid_world.envs.single_agent_env import *
