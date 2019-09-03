@@ -23,12 +23,12 @@ env = gym.make('movan-world-v0')
 
 #+BEGIN_CENTER
 #+ATTR_HTML: :width 100%
-[[file:./sample/single-agent.webm]]
+[[file:./sample/single-agent.gif]]
 #+END_CENTER
 
 - Multi Agent Environment
 
 #+BEGIN_CENTER
 #+ATTR_HTML: :width 100%
-[[file:./sample/multi-agent.webm]]
+[[file:./sample/multi-agent.gif]]
 #+END_CENTER
