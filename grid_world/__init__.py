@@ -45,3 +45,8 @@ register(
     id='multi-agent-8x8-v0',
     entry_point='grid_world.envs:MultiAgentMaze8x8',
 )
+
+register(
+    id='multi-agent-4x4-v0',
+    entry_point='grid_world.envs:MultiAgentMaze4x4',
+)

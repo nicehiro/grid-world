@@ -53,9 +53,9 @@ class MAEAgent():
         if self.agent_type == agent.agent_type:
             return self.default_reward
         elif self.agent_type == AgentType.Chaser and agent.agent_type == AgentType.Runner:
-            return -2
+            return 10
         elif self.agent_type == AgentType.Runner and agent.agent_type == AgentType.Chaser:
-            return 2
+            return -10
 
     def set_ends(self, agent):
         """为当前 agent 设置结束的位置

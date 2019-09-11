@@ -257,3 +257,19 @@ class MultiAgentMaze8x8(MAGridWorldEnv):
             windy=False
         )
         self.types = [(2, 2, 1), (5, 5, 1), (2, 5, 1), (5, 2, 1)]
+
+
+class MultiAgentMaze4x4(MAGridWorldEnv):
+    """多 Agent 迷宫环境
+    4x4
+    """
+
+    def __init__(self):
+        super(MultiAgentMaze4x4, self).__init__(
+            n_width=4,
+            n_height=4,
+            u_size=60,
+            default_reward=0,  # 不重要，每个 agent 保存自己的 reward map
+            default_type=0,
+            windy=False
+        )
