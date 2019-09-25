@@ -48,6 +48,7 @@ class MAGridWorldEnv(gym.Env):
                                 self.default_type,
                                 self.default_reward,
                                 0.0)
+        self.rewards = []
 
     def add_agent(self, agent):
         """添加 agent 到环境中
@@ -66,7 +67,16 @@ class MAGridWorldEnv(gym.Env):
         grids_count = self.n_height * self.n_width
         state_map = {}
         for _, agent in self.agents.items():
-            agent.start = np.random.randint(0, grids_count)
+            need_rerand = True
+            temp = 0
+            while need_rerand:
+                need_rerand = False
+                temp = np.random.randint(0, grids_count)
+                for x, y, _ in self.types:
+                    if self._xy_to_state(x, y) == temp:
+                        need_rerand = True
+                        break
+            agent.start = temp
             agent.state = self._state_to_xy(agent.start)
         self.refresh_reward_for_agents()
         for name, agent in self.agents.items():
@@ -81,6 +91,7 @@ class MAGridWorldEnv(gym.Env):
         """
         for _, agent in self.agents.items():
             agent.grids.reset()
+            self.set_rewards(agent)
             agent.ends.clear()
             for _, other in self.agents.items():
                 poi = other.state
@@ -88,6 +99,10 @@ class MAGridWorldEnv(gym.Env):
                 agent.grids.set_reward(poi[0], poi[1], reward)
                 # 设置结束的标志
                 agent.set_ends(other)
+
+    def set_rewards(self, agent):
+        for x, y, r in self.rewards:
+            agent.grids.set_reward(x, y, r)
 
     def _state_to_xy(self, s):
         x = s % self.n_width
@@ -217,6 +232,7 @@ class MAGridWorldEnv(gym.Env):
         # 每走一步，其他 agent 的 ends 需要清空重新设置
         # 每走一步，更新 agent 的 reward
         self.refresh_reward_for_agents()
+        agent.grids.set_visits(old_x, old_y, new_x, new_y)
         # 求方向
         agent.directions = self.get_direction(agent)
         info = {"x": new_x, "y": new_y, "grids": self.grids}
@@ -256,7 +272,8 @@ class MultiAgentMaze8x8(MAGridWorldEnv):
             default_type=0,
             windy=False
         )
-        self.types = [(2, 2, 1), (5, 5, 1), (2, 5, 1), (5, 2, 1)]
+        self.types = [(2, 2, 1), (5, 5, 1), (2, 5, 1), (5, 2, 1),
+                      (1, 5, 1), (3, 5, 1), (2, 4, 1), (5, 5, 1)]
 
 
 class MultiAgentMaze4x4(MAGridWorldEnv):
@@ -273,3 +290,32 @@ class MultiAgentMaze4x4(MAGridWorldEnv):
             default_type=0,
             windy=False
         )
+
+
+class MultiAgentMaze8x8Reward(MAGridWorldEnv):
+    """多 Agent 迷宫环境
+    8x8
+    """
+
+    def __init__(self):
+        super(MultiAgentMaze8x8Reward, self).__init__(
+            n_width=8,
+            n_height=8,
+            u_size=60,
+            default_reward=0,  # 不重要，每个 agent 保存自己的 reward map
+            default_type=0,
+            windy=False
+        )
+        self.types = [(2, 2, 1), (5, 5, 1), (2, 5, 1), (5, 2, 1),
+                      (1, 5, 1), (3, 5, 1), (2, 4, 1), (5, 5, 1)]
+        bad_reward = -2
+        for i in [0, 7]:
+            for j in range(1, 7):
+                r = [i, j, bad_reward]
+                self.rewards.append(r)
+                r = [j, i, bad_reward]
+                self.rewards.append(r)
+        self.rewards.append([0, 0, -5])
+        self.rewards.append([0, 7, -5])
+        self.rewards.append([7, 0, -5])
+        self.rewards.append([7, 7, -5])

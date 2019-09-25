@@ -66,6 +66,15 @@ class MAEAgent():
     def is_end_state(self):
         return self.state in self.ends
 
+    def set_reward(self, x, y, reward):
+        self.grids.set_reward(x, y, reward)
+
+    def set_type(self, x, y, type):
+        self.grids.set_type(x, y, type)
+
+    def get_visits(self, x, y):
+        return self.grids.get_visits(x, y)
+
     def get_direction(self, agent):
         """求 agent 在当前 agent 的方向
         """
