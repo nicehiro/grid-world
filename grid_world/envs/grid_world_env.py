@@ -122,9 +122,9 @@ class GridMatrix(object):
         grid = self.get_grid(x, y)
         if grid is None:
             return None
-        if grid.visits >= 5:
-            # when a grid is visited too many times, give bad reward
-            return -10
+        # if grid.visits >= 5:
+        #     # when a grid is visited too many times, give bad reward
+        #     return -1.5
         return grid.reward
 
     def get_value(self, x, y):
