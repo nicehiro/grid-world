@@ -373,7 +373,7 @@ class MovanWorld(GridWorldEnv):
 
     def __init__(self, windy=False):
         super(MovanWorld, self).__init__(
-            n_width=4,
+            n_width=3,
             n_height=4,
             u_size=60,
             default_reward=0,
@@ -381,9 +381,10 @@ class MovanWorld(GridWorldEnv):
             windy=windy
         )
         self.action_space = spaces.Discrete(4)
-        self.start = (0, 0)
-        self.rewards = [(2, 2, 1), (1, 2, -1), (2, 1, -1)]
-        self.ends = [(2, 2), (1, 2), (2, 1)]
+        self.start = (0, 1)
+        self.rewards = [(0, 3, 10), (0, 2, -1), (1, 2, -1), (1, 1, -1)]
+        self.types = [(0, 2, 1), (1, 2, 1), (1, 1, 1)]
+        self.ends = [(0, 3)]
         self.refresh_setting()
 
 if __name__ =="__main__":
